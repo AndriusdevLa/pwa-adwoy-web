@@ -17,5 +17,7 @@ export class UploadDetailComponent {
 
   deleteUpload() {
     this.upSvc.deleteUpload(this.upload);
+
   }
+
 }

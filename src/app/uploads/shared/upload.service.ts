@@ -1,25 +1,35 @@
 import { Injectable } from '@angular/core';
 import { Upload } from './upload';
-import { AngularFireDatabase, AngularFireList } from 'angularfire2/database';
 import * as firebase from 'firebase';
 import { Observable } from 'rxjs/Observable';
+import {AuthService} from "../../core/auth.service";
+import {AngularFireDatabase} from "angularfire2/database";
+import {AngularFirestore, AngularFirestoreDocument} from "angularfire2/firestore";
+
 
 @Injectable()
 export class UploadService {
 
   basePath = 'uploads';
-  uploadsRef: AngularFireList<Upload>;
-  uploads: Observable<Upload[]>;
+  avatarPath = 'avatar'
 
-  constructor(private db: AngularFireDatabase) { }
+  uploads:Observable<Upload[]>;
+  constructor(private db: AngularFireDatabase,
+              public auth: AuthService,
+              public fire: AngularFirestore,) {
+
+
+  }
 
   getUploads() {
-    this.uploads = this.db.list(this.basePath).snapshotChanges().map((actions) => {
+    this.uploads = this.db.list(`${this.auth.userId}`).snapshotChanges().map((actions) => {
       return actions.map((a) => {
         const data = a.payload.val();
-        const $key = a.payload.key;
-        return { $key, ...data };
+       const $key = a.payload.key;
+       const $ref = a.payload.ref;
+       return { $key, ...data, $ref };
       });
+
     });
     return this.uploads;
   }
@@ -42,6 +52,7 @@ export class UploadService {
         // upload in progress
         const snap = snapshot;
         upload.progress = (snap.bytesTransferred / snap.totalBytes) * 100
+
       },
       (error) => {
         // upload failed
@@ -52,23 +63,40 @@ export class UploadService {
         if (uploadTask.snapshot.downloadURL) {
           upload.url = uploadTask.snapshot.downloadURL;
           upload.name = upload.file.name;
+
+          this.fire.doc(`users/${this.auth.userId}`).update( { photoURL: upload.url })
           this.saveFileData(upload);
           return;
         } else {
           console.error('No download URL!');
         }
+
+
       },
+
     );
   }
 
+
+
   // Writes the file details to the realtime db
   private saveFileData(upload: Upload) {
-    this.db.list(`${this.basePath}/`).push(upload);
+
+    this.db.object(`${this.auth.userId}/${this.avatarPath}`).set(upload);
+
+
   }
+
+ // private updateFileData(upload: Upload) {
+
+  //  this.db.list(`${this.auth.userId}`).update(upload.url, upload.name);
+
+
+ // }
 
   // Writes the file details to the realtime db
   private deleteFileData(key: string) {
-    return this.db.list(`${this.basePath}/`).remove(key);
+    return this.db.list(`${this.auth.userId}`).remove(key);
   }
 
   // Firebase files must have unique names in their respective storage dir

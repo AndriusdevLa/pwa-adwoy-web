@@ -1,0 +1,265 @@
+.login-register-block {
+  width:576px;
+  background-color:#ffffff;
+  margin:0 auto;
+  form .mat-form-field {
+    display:block;
+    margin:0 auto;
+    width:400px;
+  }
+  form mat-error {
+    display:block;
+    margin:0 auto;
+    width:400px;
+  }
+
+  form {
+    .reset-password-block {
+      width:400px;
+      margin:0 auto;
+      display:block;
+      mat-checkbox {
+        width:auto;
+        display:inline-block;
+      }
+    }
+  }
+form .two-button-block {
+  width:400px;
+  margin:0 auto;
+  margin-bottom:90px;
+  .two-buttons {
+    display:inline-block;
+
+  }
+  .left {
+    float:left;
+  }
+  .right {
+    float:right;
+  }
+}
+
+
+  form .transparent {
+    background-color:transparent !important;
+    border:1px solid #1062e5 !important;
+    border-radius:4px !important;
+    color:#1062e5 !important;
+  }
+  form .first-last {
+    display:inline-block;
+    width:187px;
+    margin-left:0;
+  }
+
+  form .last-last {
+
+    margin-right:0;
+  }
+  form .first-last:first-child {
+    margin-right:25px;
+  }
+  .center-two-form {
+    justify-content: center;
+    display: flex;
+    margin:0 auto;
+    width:400px;
+
+  }
+
+  form .button {
+    display:block;
+    margin: 0 auto;
+    border-radius: 4px;
+    vertical-align:middle;
+    background-color: #1062e5;
+    width: 185px;
+    font-family: SSP-regural;
+    font-size: 18px;
+    height:50px;
+    margin-top:40px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ffffff;
+  }
+
+  form .is-small {
+    font-family: SSP-regural;
+    font-size: 15px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #43425d;
+    margin-top:40px;
+    padding-bottom:120px;
+    cursor:pointer;
+  }
+
+  form h3 {
+    font-family: Oswald-Regural;
+    text-transform:uppercase;
+    padding-top:50px;
+    font-size: 30px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.5;
+    letter-spacing: normal;
+    text-align: center;
+    color: #ff0033;
+    margin-bottom:0;
+  }
+  form p {
+    font-family: SSP-regural;
+    font-size: 18px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    letter-spacing: normal;
+    text-align: center;
+    color: #4d4f5c;
+    margin-top:12px;
+  }
+  form mat-checkbox {
+    display:block;
+    width:400px;
+    margin:0 auto;
+    margin-top:20px;
+    font-family: SSP-regural;
+    font-size: 15px;
+    font-weight: normal;
+    font-style: normal;
+    font-stretch: normal;
+    line-height: 1.67;
+    letter-spacing: normal;
+    text-align: left;
+    color: #43425d;
+  }
+}
+.mat-form-field-can-float.mat-form-field-should-float .mat-form-field-label, .mat-form-field-empty.mat-form-field-label {
+  font-family: SSP-regural;
+  font-size: 15px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  line-height: 1.67;
+  letter-spacing: normal;
+  text-align: left;
+  color: #43425d;
+  opacity:1;
+}
+
+.mat-form-field-infix {
+  border-bottom:2px solid #e9e9f0;
+}
+
+.mat-input-underline.mat-form-field-underline {
+  background: transparent;
+}
+
+::ng-deep .mat-input-wrapper{
+  border: 2px solid red;
+}
+
+input.mat-input-element {
+  font-family: SSP-regural;
+  font-size: 15px;
+  font-weight: normal;
+  font-style: normal;
+  font-stretch: normal;
+  letter-spacing: normal;
+  text-align: left;
+  color: #43425d;
+}
+
+.mat-checkbox-frame {
+  border-radius: 4px !important;
+  border: solid 1px #808495;
+  border-width:1px !important;
+}
+
+
+@media screen and (max-width: 630px) {
+  .login-register-block {
+    width: 100%;
+    background-color: #ffffff;
+    margin: 0 auto;
+    form .mat-form-field {
+      display: block;
+      margin: 0 auto;
+      width: 80%;
+    }
+    form mat-error {
+      display:block;
+      margin:0 auto;
+      width:80%;
+    }
+
+    form .first-last {
+      display:block;
+     width:100%;
+    }
+
+    form .last-last {
+
+      margin-right:0;
+    }
+    form .first-last:first-child {
+
+    }
+    form p {
+      margin-bottom:0;
+    }
+    .center-two-form {
+     display:block;
+      width:80%;
+
+    }
+    form mat-checkbox {
+      width:80%;
+    }
+    .reset-password-block {
+      width:80% !important;
+      margin:0 auto !important;
+    }
+    form .two-button-block {
+      display:block;
+      width:80%;
+      margin-bottom:0px;
+      .two-buttons {
+        display:block;
+        margin:0 auto;
+        float:none;
+        margin-top:20px;
+      }
+    }
+  }
+
+  .content {
+    padding-top:0px;
+    padding-bottom:0px;
+
+  }
+  .columns {
+    padding-top:0px;
+    padding-bottom:0px;
+    margin-bottom:0px;
+
+  }
+  .column {
+    padding-top:0px;
+    padding-right:0px;
+    padding-left:0px;
+    padding-bottom:0px;
+    margin-bottom:0px;
+  }
+  .columns:not(:last-child) {
+    margin-bottom:0px;
+  }
+}

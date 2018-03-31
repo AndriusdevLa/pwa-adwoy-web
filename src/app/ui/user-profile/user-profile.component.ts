@@ -14,4 +14,6 @@ export class UserProfileComponent {
   logout() {
     this.auth.signOut();
   }
+
+
 }

@@ -2,6 +2,7 @@
 
 <div *ngFor="let upload of uploads | async">
   <upload-detail [upload]='upload'></upload-detail>
+  <img src="{{upload.url}}" alt="">
 </div>
 
 <loading-spinner *ngIf="showSpinner"></loading-spinner>

@@ -4,6 +4,8 @@ nav {
   margin-bottom: 25px;
   padding: 0 5vw;
   padding-right: 60px;
+  height:70px;
+  padding-left:26px;
 
   .nav-item {
     color: gray;
@@ -13,4 +15,17 @@ nav {
       font-color: #1c90f3;
     }
   }
+}
+
+.logoo {
+  margin-right:45px;
+}
+.example-form {
+  min-width: 150px;
+  max-width: 500px;
+  width: 100%;
+}
+
+.example-full-width {
+  width: 100%;
 }

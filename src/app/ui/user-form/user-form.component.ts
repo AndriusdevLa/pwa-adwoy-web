@@ -1,24 +1,36 @@
-import { Component, OnInit } from '@angular/core';
-import { ReactiveFormsModule, FormGroup, FormBuilder, Validators } from '@angular/forms';
-
+import { Component, OnInit, ViewEncapsulation } from '@angular/core';
+import {  FormGroup, FormBuilder, Validators,} from '@angular/forms';
 import { AuthService } from '../../core/auth.service';
+import {AngularFireAuth} from "angularfire2/auth";
+import {AngularFireDatabase} from "angularfire2/database";
+import {Profile} from "../../core/profile";
 
-type UserFields = 'email' | 'password';
+type UserFields = 'email' | 'password' | 'Firstname' | 'Lastname' |  'username' |  'confirmPsw' |  'confirmTerms';
+
+
 type FormErrors = { [u in UserFields]: string };
 
 @Component({
   selector: 'user-form',
   templateUrl: './user-form.component.html',
   styleUrls: ['./user-form.component.scss'],
+  encapsulation: ViewEncapsulation.None
 })
-export class UserFormComponent implements OnInit {
 
+
+export class UserFormComponent implements OnInit{
   userForm: FormGroup;
   newUser = true; // to toggle login or signup form
   passReset = false; // set to true when password reset is triggered
+  profile = {} as Profile;
   formErrors: FormErrors = {
     'email': '',
     'password': '',
+    'Firstname': '',
+    'Lastname': '',
+    'username': '',
+    'confirmPsw': '',
+    'confirmTerms': '',
   };
   validationMessages = {
     'email': {
@@ -31,9 +43,26 @@ export class UserFormComponent implements OnInit {
       'minlength': 'Password must be at least 4 characters long.',
       'maxlength': 'Password cannot be more than 40 characters long.',
     },
+    'Firstname': {
+      'required': 'First name is required',
+    },
+    'Lastname': {
+      'required': 'Last name is required',
+    },
+    'username': {
+      'required': 'Username is required',
+    },
+    'confirmPsw': {
+      'required': 'Passwords must match',
+    },
+    'confirmTerms': {
+      'required': 'You must accept our Terms',
+    },
   };
 
-  constructor(private fb: FormBuilder, private auth: AuthService) { }
+  constructor(private fb: FormBuilder, private auth: AuthService,
+              private afDatabase: AngularFireDatabase,
+              private aFAuth: AngularFireAuth,) { }
 
   ngOnInit() {
     this.buildForm();
@@ -67,6 +96,22 @@ export class UserFormComponent implements OnInit {
         Validators.minLength(6),
         Validators.maxLength(25),
       ]],
+      'Firstname': ['', [
+        Validators.required,
+      ]],
+      'Lastname': ['', [
+        Validators.required,
+      ]],
+      'username': ['', [
+        Validators.required,
+
+      ]],
+      'confirmPsw': ['', [
+        Validators.required,
+      ]],
+      'confirmTerms': ['', [
+        Validators.required,
+      ]],
     });
 
     this.userForm.valueChanges.subscribe((data) => this.onValueChanged(data));
@@ -78,7 +123,7 @@ export class UserFormComponent implements OnInit {
     if (!this.userForm) { return; }
     const form = this.userForm;
     for (const field in this.formErrors) {
-      if (Object.prototype.hasOwnProperty.call(this.formErrors, field) && (field === 'email' || field === 'password')) {
+      if (Object.prototype.hasOwnProperty.call(this.formErrors, field) && (field === 'email' || field === 'password' || field === 'Firstname' || field === 'Lastname' || field === 'username' || field === 'confirmPsw' || field === 'confirmTerms')) {
         // clear previous error message (if any)
         this.formErrors[field] = '';
         const control = form.get(field);
@@ -95,4 +140,12 @@ export class UserFormComponent implements OnInit {
       }
     }
   }
+  updateProfile(){
+    this.aFAuth.authState.subscribe(auth => {
+      this.afDatabase.object(`profile/${auth && auth.email && auth.uid}`).update(this.profile)
+    })
+
+  }
 }
+
+

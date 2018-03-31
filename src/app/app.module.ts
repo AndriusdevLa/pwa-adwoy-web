@@ -25,6 +25,9 @@ import { environment } from '../environments/environment';
 import { AngularFireModule } from 'angularfire2';
 export const firebaseConfig = environment.firebaseConfig;
 import { AngularFirestoreModule } from 'angularfire2/firestore';
+import {UploadService} from "./uploads/shared/upload.service";
+
+
 
 @NgModule({
   declarations: [
@@ -32,17 +35,24 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
   ],
   imports: [
     BrowserModule,
+
     FormsModule,
     AppRoutingModule,
     CoreModule,
     SharedModule,
     ItemModule,
+    UploadModule,
     UiModule,
     NotesModule,
     AngularFireModule.initializeApp(firebaseConfig),
+    AngularFirestoreModule,
+
   ],
   bootstrap: [
     AppComponent,
+  ],
+  providers: [
+    UploadService,
   ],
 })
 export class AppModule { }

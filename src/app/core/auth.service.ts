@@ -8,6 +8,8 @@ import { NotifyService } from './notify.service';
 
 import { Observable } from 'rxjs/Observable';
 import { switchMap } from 'rxjs/operators';
+import {Profile} from "./profile";
+import {AngularFireDatabase} from "angularfire2/database";
 
 interface User {
   uid: string;
@@ -20,11 +22,14 @@ interface User {
 export class AuthService {
 
   user: Observable<User | null>;
+  userId: string;
 
-  constructor(private afAuth: AngularFireAuth,
+  profile = {} as Profile;
+  constructor(public afAuth: AngularFireAuth,
               private afs: AngularFirestore,
               private router: Router,
-              private notify: NotifyService) {
+              private notify: NotifyService,
+              private afDatabase: AngularFireDatabase,) {
 
     this.user = this.afAuth.authState
       .switchMap((user) => {
@@ -34,6 +39,12 @@ export class AuthService {
           return Observable.of(null);
         }
       });
+
+    this.afAuth.authState.subscribe(user => {
+      if(user) {
+        this.userId = user.uid;
+      }
+    })
   }
 
   ////// OAuth Methods /////
@@ -135,5 +146,12 @@ export class AuthService {
       photoURL: user.photoURL || 'https://goo.gl/Fz9nrQ',
     };
     return userRef.set(data);
+  }
+
+  createProfile(){
+    this.afAuth.authState.subscribe(auth => {
+      this.afDatabase.object(`profile/${auth && auth.email && auth.uid}`).set(this.profile)
+        .then(() => this.router.navigateByUrl("home"));
+    })
   }
 }

@@ -1,58 +1,105 @@
+
+<div class="login-register-block">
+
+
+
+
 <form [formGroup]="userForm"  *ngIf="newUser"  (ngSubmit)="signup()">
 
-  <h3>New User Signup</h3>
-  <p class="button is-small" (click)="toggleForm()">Already Registered?</p>
-  <hr>
+  <h3>Ad Woy</h3>
+  <p>Please complete to create your account.</p>
+  <div class="center-two-form">
+  <mat-form-field class="first-last">
+    <input  [(ngModel)]="profile.firstName" matInput placeholder="First name" type="text" id="Firstname" formControlName="Firstname" required >
+  </mat-form-field>
 
-  <label for="email">Email</label>
-  <input type="email" id="email" class="input"
-         formControlName="email" required >
+  <mat-form-field class="first-last">
+    <input  [(ngModel)]="profile.lastName" matInput placeholder="Last name" type="text" id="Lastname" formControlName="Lastname" required >
+  </mat-form-field>
+  </div>
+  <mat-error *ngIf="formErrors.Firstname" >
+    {{ formErrors.Firstname }}
+  </mat-error>
+  <mat-error *ngIf="formErrors.Lastname" >
+    {{ formErrors.Lastname }}
+  </mat-error>
+  <mat-form-field class="example-full-width">
+    <input [(ngModel)]="profile.userName" matInput placeholder="Username" type="text" id="username" formControlName="username" required >
+  </mat-form-field>
+  <mat-error *ngIf="formErrors.username" >
+    {{ formErrors.username }}
+  </mat-error>
 
-  <div *ngIf="formErrors.email" class="notification is-danger">
+  <mat-form-field class="example-full-width">
+  <input matInput placeholder="Email" type="email" id="email" formControlName="email" required >
+  </mat-form-field>
+  <mat-error *ngIf="formErrors.email" >
     {{ formErrors.email }}
-  </div>
+  </mat-error>
 
-  <label for="password">Password</label>
-  <input type="password" id="password" class="input"
+
+  <mat-form-field class="example-full-width">
+  <input matInput placeholder="Password" type="password" id="password"
          formControlName="password" required >
-
-  <div *ngIf="formErrors.password" class="notification is-danger">
+  </mat-form-field>
+  <mat-error *ngIf="formErrors.password" >
     {{ formErrors.password }}
-  </div>
+  </mat-error>
 
-  <div *ngIf="userForm.valid" class="notification is-success">Form is valid</div>
-  <button type="submit" class="button" [disabled]="!userForm.valid">Submit</button>
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Confirm Password" type="password" id="confirmPsw"
+           formControlName="confirmPsw" required >
+  </mat-form-field>
+  <mat-error *ngIf="formErrors.confirmPsw">
+    {{ formErrors.confirmPsw }}
+  </mat-error>
+  <mat-checkbox  formControlName="confirmTerms" required>I agree with terms and conditions</mat-checkbox>
+  <mat-error *ngIf="userForm.valid" >Form is valid</mat-error>
+  <button type="submit" class="button" (click)="updateProfile()" [disabled]="!userForm.valid">Sign up</button>
 
+
+  <p class=" is-small" (click)="toggleForm()">Already have an account? Sign in.</p>
 </form>
 
 
-<form [formGroup]="userForm"  *ngIf="!newUser"  (ngSubmit)="login()">
+<form [formGroup]="userForm"  *ngIf="!newUser"  (ngSubmit)="login()" class="login-form">
 
-  <h3>Existing User Login</h3>
-  <p class="btn button is-small" (click)="toggleForm()">New User?</p>
-  <hr>
+  <h3>Ad Woy</h3>
+  <p>Welcome back! Please login to your account.</p>
 
-  <label for="email">Email</label>
-  <input type="email" id="email" class="input"
-         formControlName="email" required >
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Email" type="email" id="email" formControlName="email" required >
+  </mat-form-field>
 
-  <div *ngIf="formErrors.email" class="help is-danger">
+  <mat-error *ngIf="formErrors.email" >
     {{ formErrors.email }}
-  </div>
+  </mat-error>
 
-  <label for="password">Password</label>
-  <input type="password" id="password" class="input"
-         formControlName="password" required >
 
-  <div *ngIf="formErrors.password" class="help is-danger">
+  <mat-form-field class="example-full-width">
+    <input matInput placeholder="Password" type="password" id="password"
+           formControlName="password" required >
+  </mat-form-field>
+
+  <mat-error *ngIf="formErrors.password" >
     {{ formErrors.password }}
+  </mat-error>
+  <div class="reset-password-block">
+    <mat-checkbox  formControlName="confirmTerms" required>Remember me</mat-checkbox>
+    <a *ngIf="!passReset && userForm.controls.email.valid" class="help is-info" (click)="resetPassword()">Reset Password for {{userForm.value.email}}?</a>
+    <p *ngIf="passReset" class="help is-info">Reset requested. Check your email instructions.</p>
   </div>
-
-  <button type="submit" class="button" [disabled]="!userForm.valid">Submit</button>
+  <div class="two-button-block">
+    <button type="submit" class="button two-buttons left " >Login</button>
+    <button type="submit" class="button two-buttons transparent right" (click)="toggleForm()" >Sign up</button>
+  </div>
+  <p class=" is-small" style="padding-bottom:20px;margin-top:0px;padding-top:90px;" (click)="toggleForm()">Terms of use. Privacy policy.</p>
 
   <span *ngIf="userForm.valid" class="help is-success">Form Looks Valid</span>
 
-  <a *ngIf="!passReset && userForm.controls.email.valid" class="help is-info" (click)="resetPassword()">Reset Password for {{userForm.value.email}}?</a>
-  <p *ngIf="passReset" class="help is-info">Reset requested. Check your email instructions.</p>
+
+
 
 </form>
+
+</div>
